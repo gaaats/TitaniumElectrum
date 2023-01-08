@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Titanium Electrum</string>
+
+    <string name="facebook_ap">3606911302869838</string>
+    <string name="fb_login_protocol_scheme">fb3606911302869838</string>
+    <string name="takeeeee">Choose Image</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

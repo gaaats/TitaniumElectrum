@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/game_nav"
+    app:startDestination="@id/stttaFragment">
+
+    <fragment
+        android:id="@+id/stttaFragment"
+        android:name="com.game.space.sho.StttaFragment"
+        android:label="fragment_sttta"
+        tools:layout="@layout/fragment_sttta" >
+        <action
+            android:id="@+id/action_stttaFragment_to_mstaaFragment"
+            app:destination="@id/mstaaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mstaaFragment"
+        android:name="com.game.space.sho.MstaaFragment"
+        android:label="fragment_mstaa"
+        tools:layout="@layout/fragment_mstaa" />
+</navigation>
