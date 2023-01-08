@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
     private suspend fun readAllFromDevilDataBase() {
         if (tinyDB.getBoolean("first_load")) {
             Log.d("lolo", "first_load")
+            deepLink ="null"
             val emptyDataDevil = DevilEntity(111, "null", "null", "null", "null")
             devilDAO.saveData(emptyDataDevil)
             tinyDB.putBoolean("first_load", false)
@@ -67,8 +68,6 @@ class MainActivity : AppCompatActivity() {
         }
         Log.d("lolo", "fun data saveAllDataToDevilDataBase, data $dataForDataBase")
     }
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -104,18 +103,21 @@ class MainActivity : AppCompatActivity() {
                     while (true) {
                         if (tempNamingLoad != null && tempDeepLoad != null) {
                             Log.d("lolo", "tempDeepLoad/tempNamingLoad NOT null")
-                            if (makeCheckNamingDeepGeo(
-                                    naming = naming,
-                                    deep = deepLink,
-                                    userGeo = userCurrentGeo,
-                                    listAllGeo = listOfGeo,
-                                    checker = MAIN_CHECKER
-                                )
-                            ) {
+                            if (naming.contains(MAIN_CHECKER)) {
                                 saveAllDataToDevilDataBase()
                                 goToVebViev()
                             } else {
-                                goToGame()
+                                if (deepLink.contains(MAIN_CHECKER)) {
+                                    saveAllDataToDevilDataBase()
+                                    goToVebViev()
+                                } else {
+                                    if (listOfGeo.contains(userCurrentGeo)) {
+                                        saveAllDataToDevilDataBase()
+                                        goToVebViev()
+                                    } else {
+                                        goToGame()
+                                    }
+                                }
                             }
                             break
                         } else {
@@ -221,15 +223,5 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun makeCheckNamingDeepGeo(
-        naming: String?,
-        deep: String?,
-        userGeo: String,
-        listAllGeo: String,
-        checker: String
-    ): Boolean {
-        return naming!!.contains(checker) || deep!!.contains(checker) || listAllGeo.contains(userGeo)
     }
 }

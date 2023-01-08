@@ -371,6 +371,10 @@ class BrooovActivity : AppCompatActivity() {
             jukiikikkiik(jukiiiii.toString())
         }
         Log.d("lolo", "link is $kikikik")
+        Log.d("lolo", "naming is $naaaming")
+        Log.d("lolo", "deeplink is $deeeepLinka")
+        Log.d("lolo", "link is $liinka")
+        Log.d("lolo", "mainId is $maaainID")
         return sharedPreferences.getString("SAVED_URL", kikikik).toString()
     }
 
