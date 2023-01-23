@@ -30,6 +30,10 @@ data class DevilEntity(
     @SerializedName("link")
     @Expose
     val link: String,
+    @ColumnInfo("instID")
+    @SerializedName("instID")
+    @Expose
+    val instID: String,
 
 ) {
 }

@@ -33,6 +33,10 @@ class BrooovActivity : AppCompatActivity() {
         DevilDataBase.getDataBase(application).getDevilDAO()
     }
 
+    val tinyDB by lazy {
+        TinyDB(applicationContext)
+    }
+
     private lateinit var devilData:DevilEntity
 
     override fun onBackPressed() {
@@ -248,55 +252,55 @@ class BrooovActivity : AppCompatActivity() {
     }
 
 
-    private fun jukiikikkiik(string: String) {
-        OneSignal.setExternalUserId(
-            string,
-            object : OneSignal.OSExternalUserIdUpdateCompletionHandler {
-                override fun onSuccess(results: JSONObject) {
-                    try {
-                        if (results.has("push") && results.getJSONObject("push").has("success")) {
-                            val frrfrfrrf = results.getJSONObject("push").getBoolean("success")
-                            OneSignal.onesignalLog(
-                                OneSignal.LOG_LEVEL.VERBOSE,
-                                "Set external user id for push status: $frrfrfrrf"
-                            )
-                        }
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                    }
-                    try {
-                        if (results.has("email") && results.getJSONObject("email").has("success")) {
-                            val vfnkvfnfvvfn =
-                                results.getJSONObject("email").getBoolean("success")
-                            OneSignal.onesignalLog(
-                                OneSignal.LOG_LEVEL.VERBOSE,
-                                "Set external user id for email status: $vfnkvfnfvvfn"
-                            )
-                        }
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                    }
-                    try {
-                        if (results.has("sms") && results.getJSONObject("sms").has("success")) {
-                            val kiikikfrrfrfrrr = results.getJSONObject("sms").getBoolean("success")
-                            OneSignal.onesignalLog(
-                                OneSignal.LOG_LEVEL.VERBOSE,
-                                "Set external user id for sms status: $kiikikfrrfrfrrr"
-                            )
-                        }
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                    }
-                }
-
-                override fun onFailure(error: OneSignal.ExternalIdError) {
-                    OneSignal.onesignalLog(
-                        OneSignal.LOG_LEVEL.VERBOSE,
-                        "Set external user id done with error: $error"
-                    )
-                }
-            })
-    }
+//    private fun jukiikikkiik(string: String) {
+//        OneSignal.setExternalUserId(
+//            string,
+//            object : OneSignal.OSExternalUserIdUpdateCompletionHandler {
+//                override fun onSuccess(results: JSONObject) {
+//                    try {
+//                        if (results.has("push") && results.getJSONObject("push").has("success")) {
+//                            val frrfrfrrf = results.getJSONObject("push").getBoolean("success")
+//                            OneSignal.onesignalLog(
+//                                OneSignal.LOG_LEVEL.VERBOSE,
+//                                "Set external user id for push status: $frrfrfrrf"
+//                            )
+//                        }
+//                    } catch (e: JSONException) {
+//                        e.printStackTrace()
+//                    }
+//                    try {
+//                        if (results.has("email") && results.getJSONObject("email").has("success")) {
+//                            val vfnkvfnfvvfn =
+//                                results.getJSONObject("email").getBoolean("success")
+//                            OneSignal.onesignalLog(
+//                                OneSignal.LOG_LEVEL.VERBOSE,
+//                                "Set external user id for email status: $vfnkvfnfvvfn"
+//                            )
+//                        }
+//                    } catch (e: JSONException) {
+//                        e.printStackTrace()
+//                    }
+//                    try {
+//                        if (results.has("sms") && results.getJSONObject("sms").has("success")) {
+//                            val kiikikfrrfrfrrr = results.getJSONObject("sms").getBoolean("success")
+//                            OneSignal.onesignalLog(
+//                                OneSignal.LOG_LEVEL.VERBOSE,
+//                                "Set external user id for sms status: $kiikikfrrfrfrrr"
+//                            )
+//                        }
+//                    } catch (e: JSONException) {
+//                        e.printStackTrace()
+//                    }
+//                }
+//
+//                override fun onFailure(error: OneSignal.ExternalIdError) {
+//                    OneSignal.onesignalLog(
+//                        OneSignal.LOG_LEVEL.VERBOSE,
+//                        "Set external user id done with error: $error"
+//                    )
+//                }
+//            })
+//    }
 
 
     private suspend fun saaacfff(): String {
@@ -360,16 +364,16 @@ class BrooovActivity : AppCompatActivity() {
 
         val jhjhjhj = Build.VERSION.RELEASE
 
-        var kikikik = ""
-        if (naaaming != "null") {
-            kikikik =
-                "$liinka$kjjkjk$naaaming&$bbgbgbg$jukiiiii&$adidddddd$maaainID&$sub4frfrr$hyhyyygfdddd&$bgbggbbg$jhjhjhj&$sub6frfr$mmnnhnh"
-            jukiikikkiik(jukiiiii.toString())
-        } else {
-            kikikik =
-                "$liinka$kjjkjk$deeeepLinka&$bbgbgbg$jukiiiii&$adidddddd$maaainID&$sub4frfrr$hyhyyygfdddd&$bgbggbbg$jhjhjhj&$sub6frfr$deppfrfrf"
-            jukiikikkiik(jukiiiii.toString())
-        }
+        val kikikik = MainClassssa.link
+//        if (naaaming != "null") {
+//            kikikik =
+//                "$liinka$kjjkjk$naaaming&$bbgbgbg$jukiiiii&$adidddddd$maaainID&$sub4frfrr$hyhyyygfdddd&$bgbggbbg$jhjhjhj&$sub6frfr$mmnnhnh"
+////            jukiikikkiik(jukiiiii.toString())
+//        } else {
+//            kikikik =
+//                "$liinka$kjjkjk$deeeepLinka&$bbgbgbg$jukiiiii&$adidddddd$maaainID&$sub4frfrr$hyhyyygfdddd&$bgbggbbg$jhjhjhj&$sub6frfr$deppfrfrf"
+////            jukiikikkiik(jukiiiii.toString())
+//        }
         Log.d("lolo", "link is $kikikik")
         Log.d("lolo", "naming is $naaaming")
         Log.d("lolo", "deeplink is $deeeepLinka")
