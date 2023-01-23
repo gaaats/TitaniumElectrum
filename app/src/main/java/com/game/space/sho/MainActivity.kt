@@ -35,6 +35,8 @@ class MainActivity : AppCompatActivity() {
         TinyDB(applicationContext)
     }
 
+
+
     val deviceID = "deviceID="
     val sub_id_1 = "sub_id_1="
     val ad_id = "ad_id="
@@ -312,7 +314,9 @@ class MainActivity : AppCompatActivity() {
             instId = instIDDDD
 
         } else {
-
+            if (instId == ""){
+                instId = MyTracker.getInstanceId(application)
+            }
         }
 
         MyTracker.initTracker(MY_TRACKER_KEY, application)
