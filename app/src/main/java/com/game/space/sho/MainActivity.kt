@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             when (codeFromDevilHost) {
-                "0" -> {
+                "2" -> {
                     Log.d("lolo", "in 0")
                     goToGame()
                 }
@@ -167,7 +167,7 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
-                "3" -> {
+                "0" -> {
                     Log.d("lolo", "in 3")
                     initLoadMyTracker()
                     //Fb + initLoadMyTracker
