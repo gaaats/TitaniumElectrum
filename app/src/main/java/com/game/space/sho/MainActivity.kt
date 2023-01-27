@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     val deviceID = "deviceID="
     val sub_id_1 = "sub_id_1="
     val ad_id = "ad_id="
@@ -139,7 +138,7 @@ class MainActivity : AppCompatActivity() {
                                 MainClassssa.typeOfPromotion = Unded.CAMPAIGN
 
                                 MainClassssa.link =
-                                    "$linka?$sub_id_1$naming&$deviceID$appsId&$ad_id$advertMainId&$sub_id_4${pacaaakageNameMain}&$sub_id_5$buildVers&$sub_id_6$naming_name"
+                                    "$linka$sub_id_1$naming&$deviceID$appsId&$ad_id$advertMainId&$sub_id_4${pacaaakageNameMain}&$sub_id_5$buildVers&$sub_id_6$naming_name"
 
                                 pushToOS(appsId.toString())
 
@@ -152,7 +151,7 @@ class MainActivity : AppCompatActivity() {
                                 ) {
                                     MainClassssa.typeOfPromotion = Unded.DEEPLINK
                                     MainClassssa.link =
-                                        "$linka?$sub_id_1$deepLink&$deviceID$appsId&$ad_id$advertMainId&$sub_id_4${pacaaakageNameMain}&$sub_id_5$buildVers&$sub_id_6$deeporg"
+                                        "$linka$sub_id_1$deepLink&$deviceID$appsId&$ad_id$advertMainId&$sub_id_4${pacaaakageNameMain}&$sub_id_5$buildVers&$sub_id_6$deeporg"
 
                                     pushToOS(appsId.toString())
 
@@ -178,7 +177,7 @@ class MainActivity : AppCompatActivity() {
                                 Log.d("lolo", "var 3 deepLink.contains(MAIN_CHECKER)")
                                 MainClassssa.typeOfPromotion = Unded.DEEPLINKNOAPPS
                                 MainClassssa.link =
-                                    "$linka?$sub_id_1$deepLink&$deviceID$instId&$ad_id$instId&$sub_id_4${pacaaakageNameMain}&$sub_id_5$buildVers&$sub_id_6$deeporg"
+                                    "$linka$sub_id_1$deepLink&$deviceID$instId&$ad_id$instId&$sub_id_4${pacaaakageNameMain}&$sub_id_5$buildVers&$sub_id_6$deeporg"
 
                                 pushToOS(instId.toString())
                                 saveAllDataToDevilDataBase()
@@ -188,7 +187,7 @@ class MainActivity : AppCompatActivity() {
                                     Log.d("lolo", "var 3 listOfGeo.contains(userCurrentGeo)")
                                     MainClassssa.typeOfPromotion = Unded.GEO
                                     MainClassssa.link =
-                                        "$linka?$sub_id_1$instId&$ad_id$instId&$sub_id_4${pacaaakageNameMain}&$sub_id_5$buildVers&$sub_id_6$naming_name"
+                                        "$linka$sub_id_1$instId&$ad_id$instId&$sub_id_4${pacaaakageNameMain}&$sub_id_5$buildVers&$sub_id_6$naming_name"
 
                                     pushToOS(instId.toString())
                                     saveAllDataToDevilDataBase()
@@ -314,7 +313,7 @@ class MainActivity : AppCompatActivity() {
             instId = instIDDDD
 
         } else {
-            if (instId == ""){
+            if (instId == "") {
                 instId = MyTracker.getInstanceId(application)
             }
         }
