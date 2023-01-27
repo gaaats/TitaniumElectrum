@@ -309,9 +309,7 @@ class MainActivity : AppCompatActivity() {
         val instIDDDD = MyTracker.getInstanceId(application)
         myTrackerConfig.isTrackingLaunchEnabled = true
         if (tinyDB.getBoolean("first_load")) {
-
             instId = instIDDDD
-
         } else {
             if (instId == "") {
                 instId = MyTracker.getInstanceId(application)
