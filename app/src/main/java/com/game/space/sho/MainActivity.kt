@@ -187,7 +187,7 @@ class MainActivity : AppCompatActivity() {
                                     Log.d("lolo", "var 3 listOfGeo.contains(userCurrentGeo)")
                                     MainClassssa.typeOfPromotion = Unded.GEO
                                     MainClassssa.link =
-                                        "$linka$sub_id_1$instId&$ad_id$instId&$sub_id_4${pacaaakageNameMain}&$sub_id_5$buildVers&$sub_id_6$naming_name"
+                                        "$linka$deviceID$instId&$ad_id$instId&$sub_id_4${pacaaakageNameMain}&$sub_id_5$buildVers&$sub_id_6$naming_name"
 
                                     pushToOS(instId.toString())
                                     saveAllDataToDevilDataBase()
