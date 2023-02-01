@@ -27,6 +27,26 @@ import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
 
+    override fun onPause() {
+        Log.d("lolo", "onPause")
+        super.onPause()
+    }
+
+    override fun onStop() {
+        Log.d("lolo", "onStop")
+
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        Log.d("lolo", "onDestroy")
+
+        super.onDestroy()
+    }
+
+
+
+
     private val devilDAO by lazy {
         DevilDataBase.getDataBase(application).getDevilDAO()
     }
@@ -68,6 +88,10 @@ class MainActivity : AppCompatActivity() {
             val dataFromDataBase = devilDAO.getAllDevilData().first()
             Log.d("lolo", "data fromDB ${dataFromDataBase}")
             naming = dataFromDataBase.naming
+
+            tempDeepLoad = "loaded"
+            tempNamingLoad = "loaded"
+
             deepLink = dataFromDataBase.deeplink
             linka = dataFromDataBase.link
             advertMainId = dataFromDataBase.advertid
@@ -78,6 +102,7 @@ class MainActivity : AppCompatActivity() {
     private val volleyApiClient by lazy {
         VolleyApiClient(applicationContext)
     }
+
 
 
     private suspend fun saveAllDataToDevilDataBase() {
@@ -99,8 +124,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        lifecycleScope.launch {
-            getDeep(this@MainActivity)
+        Log.d("lolo", "onCreate")
+
+        lifecycleScope.launchWhenCreated {
             readAllFromDevilDataBase()
 
             withContext(Dispatchers.Default) {
@@ -125,6 +151,7 @@ class MainActivity : AppCompatActivity() {
                     goToGame()
                 }
                 "1" -> {
+                    getDeep(this@MainActivity)
                     Log.d("lolo", "in 1")
                     //Fb + Apps
                     initAppsFlyerLibeer(this@MainActivity)
@@ -167,6 +194,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 "0" -> {
+                    getDeep(this@MainActivity)
                     Log.d("lolo", "in 0")
                     initLoadMyTracker()
                     //Fb + initLoadMyTracker
@@ -198,7 +226,7 @@ class MainActivity : AppCompatActivity() {
                             }
                             break
                         } else {
-                            Log.d("lolo", "tempDeepLoad/tempNamingLoad == null")
+                            Log.d("lolo", "tempDeepLoa == null")
                             delay(1000)
                         }
                     }
@@ -207,6 +235,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
 
     private fun goToVebViev() {
         Intent(this@MainActivity, BrooovActivity::class.java).apply {
@@ -253,6 +282,7 @@ class MainActivity : AppCompatActivity() {
                 naming = this
                 tempNamingLoad = this
                 Log.d("lolo", "onConversionDataSuccess")
+                Log.d("lolo", "onConversionDataSuccess ${this}")
             }
         }
 
@@ -296,6 +326,7 @@ class MainActivity : AppCompatActivity() {
                 Log.d("lolo", "getDeep loaded")
             }
             if (appLinkData == null) {
+                Log.d("lolo", "getDeep appLinkData == null")
                 tempDeepLoad = "null"
                 if (deepLink == "null") {
                     deepLink = "null"
